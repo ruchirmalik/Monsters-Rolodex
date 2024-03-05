@@ -1,25 +1,74 @@
 import logo from './logo.svg';
 import './App.css';
+import { Component } from 'react';
+class App extends Component {
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  constructor() {
+    super();
+    this.state = {
+      drivers: [
+        {
+          firstName: 'Lewis',
+          lastName: 'Hamilton',
+          id: '01'
+        },
+        {
+          firstName: 'George',
+          lastName: 'Russell',
+          id: '02'
+        },
+        {
+          firstName: 'Max',
+          lastName: 'Verstappen',
+          id: '03'
+        },
+        {
+          firstName: 'Sergio',
+          lastName: 'Perez',
+          id: '04'
+        }
+      ]
+
+    }
+  }
+
+
+  render() {
+    return (
+      <div className="App">
+
+        {/* <h1> {this.state.driver1.firstName} {this.state.driver1.lastName}</h1>
+        <h1> {this.state.driver2.firstName} {this.state.driver2.lastName}</h1>
+        <h1> {this.state.driver3.firstName} {this.state.driver3.lastName}</h1>
+        <h1> {this.state.driver4.firstName} {this.state.driver4.lastName}</h1> */}
+        {
+          this.state.drivers.map((driver) => {
+            return (
+              <div key={driver.id}>
+                <h1>{driver.firstName}</h1>
+              </div>
+            );
+          })
+        }
+
+
+        {/* <button
+          onClick={() => {
+            this.setState(
+              () => {
+                return {
+                  drivers: { firstName: 'Asavari', lastName: 'Hari' },
+                };
+              },
+              () => { }
+            );
+          }}>
+          Change Name
+        </button> */}
+
+      </div >
+    );
+  }
 }
 
 export default App;
