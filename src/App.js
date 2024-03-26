@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import CardList from './components/card-list/card-list.component';
 import SearchBox from './components/search-box/search-box.component';
 
@@ -8,25 +8,29 @@ const App = () => {
 
   const [searchField, setSearchField] = useState('');
   const [monsters, setMonsters] = useState([])
-  //console.log(searchField)
-
-  console.log('render');
+  const [filteredMonsters, setFilteredMonsters] = useState(monsters);
 
   //since the users is coming from the outside through the API URL, it is a different array in memory. Hence infinite re-rendering
-  fetch('https://jsonplaceholder.typicode.com/users') //it's a promise - asynchronous programming
-    .then((response) => response.json())
-    .then((users) => setMonsters(users)
-    );
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/users') //it's a promise - asynchronous programming
+      .then((response) => response.json())
+      .then((users) => setMonsters(users));
+  }, []);
+
+
+  useEffect(() => {
+    console.log('effect fired');
+    const newFilteredMonsters = monsters.filter((monster) => {
+      return monster.name.toLocaleLowerCase().includes(searchField);
+    })
+    setFilteredMonsters(newFilteredMonsters);
+  }, [monsters, searchField])
+
 
   const onSearchChange = (event) => {
-    console.log('render')
     const searchFieldString = event.target.value.toLocaleLowerCase();
     setSearchField(searchFieldString);
   };
-
-  const filteredMonsters = monsters.filter((monster) => {
-    return monster.name.toLocaleLowerCase().includes(searchField);
-  })
 
   return (
     <div className="App">
